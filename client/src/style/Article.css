@@ -1,0 +1,106 @@
+.article-card {
+  width: 25rem;
+  min-width: 25rem;
+  max-width: 25rem;
+  border: 2px solid #662e9b;
+  background: rgba(102,46,155,0.12);
+  backdrop-filter: blur(4px);
+}
+
+.article-card .list-group-flush {
+  min-height: 8rem;
+}
+
+.article-card .list-group-flush .list-group-item {
+  background: transparent;
+}
+
+.article-card .card-title {
+  color: #662e9b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.2rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+  font-size: 1.5rem;
+}
+
+.article-card em {
+  min-height: 10rem;
+  max-height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.article-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-icon {
+  font-size: 2rem;
+}
+
+.card-list-item {
+  width: 100%;
+  max-width: 36rem;
+  border-color: #662e9b;
+}
+
+.btn-read-article {
+  background-color: #662e9b !important;
+  border-color: #662e9b !important;
+  color: #fff !important;
+}
+
+.btn-show-articles {
+  background-color: #63A7D5 !important;
+  border-color: #63A7D5 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  position: relative;
+}
+
+.btn-read-article:hover {
+  background-color: #4b1c6b !important;
+  border-color: #4b1c6b !important;
+}
+
+.btn-show-articles:hover {
+  background-color: #4596c7 !important;
+  border-color: #4596c7 !important;
+  color: #fff !important;
+}
+
+.category-section .category-label {
+    display: inline-block;
+    border: 2px solid #662e9b;
+    background: #fff;
+    color: #662e9b;
+    padding: 0.3em 1.2em;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin: 0.7rem auto;
+}
+
+.articles-list-row > .col-12,
+.articles-list-row > .col-md-4 {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}

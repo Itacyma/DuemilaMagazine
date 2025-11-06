@@ -1,0 +1,140 @@
+.author-page {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+/* Sezione header autore */
+.author-header-section {
+  background: linear-gradient(135deg, rgba(102, 46, 155, 0.1), rgba(255, 130, 35, 0.1));
+  border: 2px solid #662e9b;
+  border-radius: 12px;
+  padding: 3rem;
+  margin-bottom: 5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.author-page-photo {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #662e9b;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.author-page-nickname {
+  color: #662e9b;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.author-page-age {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.author-page-presentation {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  min-height: 150px;
+}
+
+.author-page-presentation p {
+  margin: 0;
+  line-height: 1.6;
+  text-align: justify;
+  font-size: 1.1rem;
+}
+
+.author-page-contacts {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn-contact-large {
+  padding: 0.75rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-instagram-large {
+  background-color: transparent;
+  color: #E4405F;
+  border-color: #E4405F;
+}
+
+.btn-instagram-large:hover {
+  background-color: #E4405F;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(228, 64, 95, 0.3);
+}
+
+.btn-email-large {
+  background-color: transparent;
+  color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-email-large:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Sezione articoli */
+.author-articles-section {
+  margin-top: 2rem;
+}
+
+.articles-section-title {
+  color: #662e9b;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.articles-divider {
+  border: none;
+  border-top: 3px solid #662e9b;
+  width: 70%;
+  margin: 0 auto 3rem auto;
+}
+
+@media (max-width: 768px) {
+  .author-page-photo {
+    width: 200px;
+    height: 200px;
+  }
+
+  .author-page-nickname {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .author-header-section {
+    padding: 1.5rem;
+  }
+
+  .author-page-contacts {
+    justify-content: center;
+  }
+}

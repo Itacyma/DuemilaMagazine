@@ -1,0 +1,32 @@
+.cards-page {
+  padding-top: 3rem;
+}
+
+.cards-title {
+  color: #ff8223;
+  text-shadow: 2px 2px 8px #ffe5b4;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: 'Permanent Marker', 'Comic Sans MS', cursive, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.cards-list-row {
+  padding-bottom: 2rem;
+  gap: 2.5rem;
+}
+
+.card-list-item {
+  width: 18rem;
+}
+
+.btn-outline-orange { 
+  color: white !important;
+  border-color: #662e9b !important;
+  background-color: #662e9b !important;
+}

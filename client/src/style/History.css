@@ -1,0 +1,39 @@
+.history-container {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.history-title {
+  color: #ff8223;
+  text-shadow: 2px 2px 8px #ffe5b4;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+  padding-bottom: 3rem;
+  font-family: 'Permanent Marker', 'Comic Sans MS', cursive, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.history-accordion {
+  margin-bottom: 2rem;
+  border-top: 2px solid #ff8223;
+  border-bottom: 2px solid #ff8223;
+  border-left: 2px solid #ff8223;
+  border-right: 2px solid #ff8223;
+  border-radius: 16px;
+  background: #ff8223;
+  padding: 0.5rem 1rem;
+}
+
+.history-list-group {
+  margin-bottom: 1.2rem;
+}
+
+.history-badge {
+  font-size: 1rem;
+  margin-left: 0.5rem;
+}

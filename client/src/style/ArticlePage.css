@@ -1,0 +1,114 @@
+.article-page-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.article-page-card {
+  width: 60rem;
+  max-width: 90vw;
+}
+
+.article-page-card .card-title {
+  font-weight: bold;
+  color: #662e9b;
+  text-align: center;
+  margin-bottom: 0;
+  margin-top: 1rem;
+  font-size: 2rem;
+  min-height: 5.2rem;
+  max-height: 5.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.article-action-divider {
+  border-top: 1px solid #ccc;
+  margin: 2rem 0 1.5rem 0;
+}
+
+.article-action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-action-buttons .btn {
+  font-size: 1.7rem;
+  padding: 0.5rem 1rem;
+  border-width: 3px;
+}
+
+/* Like button: azzurro #63a7d5 */
+.article-action-buttons .like-btn {
+  color: #63a7d5;
+  border-color: #63a7d5;
+  background-color: transparent;
+}
+.article-action-buttons .like-btn:hover,
+.article-action-buttons .like-btn:focus {
+  background-color: transparent;
+  color: #63a7d5;
+  border-color: #63a7d5;
+}
+
+/* Bookmark: giallo #FFD600 */
+.article-action-buttons .bookmark-btn {
+  color: #FFD600;
+  border-color: #FFD600;
+  background-color: transparent;
+}
+.article-action-buttons .bookmark-btn:hover,
+.article-action-buttons .bookmark-btn:focus {
+  background-color: transparent;
+  color: #FFD600;
+  border-color: #FFD600;
+}
+.article-action-buttons .bookmark-btn.active {
+  background-color: #FFD600;
+  color: #fff;
+  border-color: #FFD600;
+}
+
+/* Comment button: verde #38dd90 */
+.article-action-buttons .comment-btn {
+  color: #38dd90;
+  border-color: #38dd90;
+  background-color: transparent;
+  margin-right: 1.2rem;
+}
+.article-action-buttons .comment-btn:hover,
+.article-action-buttons .comment-btn:focus {
+  background-color: transparent;
+  color: #38dd90;
+  border-color: #38dd90;
+}
+
+.article-back-btn {
+  font-size: 1.7rem;
+  padding: 0.5rem 1rem;
+  border-width: 3px;
+  color: #662e9b;
+  border-color: #662e9b;
+  background-color: transparent;
+  margin-left: 1rem;
+}
+.article-back-btn:hover,
+.article-back-btn:focus {
+  background-color: #662e9b;
+  color: #fff;
+  border-color: #662e9b;
+}
+
+.article-content {
+  padding: 0.5rem 2.5rem;
+  font-size: 1.15rem;
+  text-align: justify;
+}
+

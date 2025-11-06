@@ -1,0 +1,17 @@
+.timer-container {
+  margin-bottom: 1rem;
+}
+
+.timer-row {
+  text-align: center;
+}
+
+.timer-value {
+  font-size: 2.5rem;
+  margin-top: 0.25rem;
+  display: inline-block;
+}
+
+.timer-label {
+  margin-bottom: 0.5rem;
+}

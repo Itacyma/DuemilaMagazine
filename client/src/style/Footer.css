@@ -1,0 +1,22 @@
+.footer-navbar {
+  min-height: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  margin-top: 6rem;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-text {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-left: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}

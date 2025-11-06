@@ -1,0 +1,117 @@
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+.App {
+  height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper{
+  background-color: #662e9b ;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-content-home {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.page-content {
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+  margin: 3rem;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+
+  min-width: 600px;
+  min-height: 500px;
+  padding: 2rem;
+}
+
+[data-bs-theme="dark"] .page-content {
+  background-color: #212529;
+  color: white;
+}
+
+.btn-outline-orange { 
+  color: white !important;
+  border-color: #662e9b !important;
+  background-color: #662e9b !important;
+}
+
+.form-check-input{
+  border: 2px solid #662e9b !important;
+}
+
+.form-check-input:checked {
+  background-color: #662e9b !important;
+  border-color: #662e9b !important;
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(102, 46, 155, 0.5) !important;
+}
+
+.form-select:focus {
+  border-color: #662e9b !important;
+  box-shadow: 0 0 0 0.25rem rgba(102, 46, 155, 0.5) !important;
+}
+
+.navbar .navbar-brand {
+  margin: 0.5rem;
+}
+
+.table td, .table th {
+  vertical-align: middle !important;
+}
+
+.rounded-top-left {
+  border-top-left-radius: 0.25rem !important;
+}
+.rounded-top-right {
+  border-top-right-radius: 0.25rem !important;
+}
+
+.article-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.article-card {
+  width: 18rem;
+}
+
+.section-title {
+  color: #662e9b;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}

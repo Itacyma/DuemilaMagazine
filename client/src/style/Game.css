@@ -1,0 +1,108 @@
+.game-title {
+  display: flex;
+  justify-content: center;
+  font-family: 'Permanent Marker', 'Comic Sans MS', cursive, sans-serif;
+  font-size: 2rem;
+  gap: 2rem;
+  
+}
+
+.game-title-round {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.game-cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.game-card-item {
+  width: 18rem;
+}
+
+.game-btn-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.game-cards-won-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 9rem;
+
+  scrollbar-color: #ff8223 #ffe5b4; 
+  scrollbar-width: thin;
+  margin-top: 12px; 
+}
+
+.game-cards-won-item {
+  flex-shrink: 1;
+  flex-basis: 13rem;
+  max-width: 18rem;
+}
+
+.game-cards-won-row::-webkit-scrollbar {
+  height: 14px;
+  background: #ffe5b4;
+  margin-top: 12px; 
+  border-radius: 8px;
+}
+.game-cards-won-row::-webkit-scrollbar-thumb {
+  background: #ff8223;
+  border-radius: 8px;
+  border: 3px solid #ffe5b4;
+}
+.game-cards-won-row::-webkit-scrollbar-track {
+  background: #ffe5b4;
+  border-radius: 8px;
+}
+
+.game-lives-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.6rem;
+}
+
+.game-lives-hearts {
+  font-size: 4rem;
+  color: #e63946;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  gap: 0.2em;
+}
+
+.victory-title {
+  color: #28a745;
+  text-shadow: 2px 2px 8px #b6ffb6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.defeat-title {
+  color: #dc3545;
+  text-shadow: 2px 2px 8px #ffb6b6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 3.5rem;
+  margin-bottom: 0.5rem;
+}

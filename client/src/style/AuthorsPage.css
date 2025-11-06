@@ -1,0 +1,40 @@
+.authors-page {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.authors-page .section-title {
+  color: #662e9b;
+  text-align: center;
+  font-weight: bold;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.authors-list-row {
+  margin-top: 2rem;
+}
+
+.authors-list-row > .col-12,
+.authors-list-row > .col-md-4 {
+  display: flex;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
+}
+
+.btn-show-more-authors {
+  background-color: #63a7d5 !important;
+  border-color: #63a7d5 !important;
+  color: #fff !important;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 0.6rem 2rem;
+  font-size: 1.1rem;
+}
+
+.btn-show-more-authors:hover {
+  background-color: #4596c7 !important;
+  border-color: #4596c7 !important;
+}

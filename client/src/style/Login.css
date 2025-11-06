@@ -1,0 +1,47 @@
+
+
+.login-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f7f7f7;
+  padding: 0;
+}
+
+.login-content {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem rgba(0,0,0,0.12);
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  min-width: 340px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-title {
+  color: #FF5623;
+  font-family: 'Permanent Marker', 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  margin-bottom: 0.3rem;
+  margin-top: 0.1rem;
+}
+
+.auth-form .form-control {
+  border-radius: 0.5rem;
+}
+
+.auth-form .btn-outline-orange {
+  background: #FF5623;
+  color: #fff !important;
+  border: none;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+.auth-form .btn-outline-orange:disabled {
+  background: #ffb199;
+  color: #fff;
+}

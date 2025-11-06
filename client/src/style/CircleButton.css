@@ -1,0 +1,28 @@
+.circle-btn {
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  min-height: 45px;
+  border-radius: 50%;
+  padding: 0;
+  font-weight: bold;
+  font-size: 20px;
+  flex-shrink: 0;
+  background: #fff;
+  color: #FF5623;
+  border: 2px solid #FF5623;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.circle-btn:hover, .circle-btn:focus {
+  background: #FF5623;
+  color: #fff;
+  border: 2px solid #FF5623;
+}
+
+.circle-btn-active {
+  background: #FF5623 !important;
+  color: #fff !important;
+  border: 2px solid #FF5623 !important;
+  box-shadow: 0 0 0 0.2rem rgba(255,86,35,0.25);
+}
