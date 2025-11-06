@@ -100,7 +100,7 @@ function ArticlePage(props) {
         setEditTitle(article.title);
         setEditExtract(article.extract);
         setEditText(article.text);
-        setEditCategory(article.category);
+        setEditCategory(article.categoryId); 
         setIsEditing(true);
     };
 
@@ -129,13 +129,16 @@ function ArticlePage(props) {
                 title: editTitle,
                 extract: editExtract,
                 text: editText,
-                category: editCategory
+                category: editCategory // Invia l'ID della categoria
             });
             // Update local article object
             article.title = editTitle;
             article.extract = editExtract;
             article.text = editText;
-            article.category = editCategory;
+            article.categoryId = editCategory;
+            // Aggiorna anche il nome della categoria
+            const selectedCat = categories.find(c => c.id === editCategory);
+            if (selectedCat) article.category = selectedCat.name;
             setIsEditing(false);
             setExtractError('');
         } catch (err) {
@@ -184,11 +187,11 @@ function ArticlePage(props) {
                         <Form.Label>Categoria</Form.Label>
                         <Form.Select
                             value={editCategory}
-                            onChange={(e) => setEditCategory(e.target.value)}
+                            onChange={(e) => setEditCategory(Number(e.target.value))}
                             required
                         >
                             {categories.map(cat => (
-                                <option key={cat.id} value={cat.name}>{cat.name.toUpperCase()}</option>
+                                <option key={cat.id} value={cat.id}>{cat.name.toUpperCase()}</option>
                             ))}
                         </Form.Select>
                     </Form.Group>

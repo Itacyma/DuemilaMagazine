@@ -234,7 +234,7 @@ app.put('/api/articles/:id', isLoggedIn, async (req, res) => {
       return res.status(403).json({ error: 'Non hai i permessi per modificare questo articolo.' });
     }
 
-    if (!title || !extract || !text || !category) {
+    if (!title || !extract || !text || category === undefined || category === null) {
       return res.status(400).json({ error: 'Tutti i campi sono obbligatori.' });
     }
     if (extract.length > 330) {

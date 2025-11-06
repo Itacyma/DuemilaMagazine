@@ -8,14 +8,15 @@ function User(id, name, username, type, game) {
     this.game = game;
 }
 
-function Article(id, author, date, title, extract, text, category, visuals, likes, comments, nickname) {
+function Article(id, author, date, title, extract, text, category, categoryId, visuals, likes, comments, nickname) {
     this.id = id;
     this.author = author; // User ID (owner)
     this.date = dayjs(date);
     this.title = title;
     this.extract = extract;
     this.text = text;
-    this.category = category;
+    this.category = category; // Category name
+    this.categoryId = categoryId; // Category ID
     this.visuals = visuals;
     this.likes = likes;
     this.comments = comments;
