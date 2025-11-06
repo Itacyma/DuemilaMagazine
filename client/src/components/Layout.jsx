@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import { NavbarCustom } from './Navbar.jsx';
 import { Footer } from './Footer.jsx';
+import '../App.css';
 
 function Layout(props) {
     const user = props.user;
@@ -9,11 +10,13 @@ function Layout(props) {
     const setError = props.setError;
 
     return (
-        <>
+        <div className="layout-container">
             <NavbarCustom user={user} handleLogout={handleLogout} setLoading={setLoading} setError={setError}/>
-            <Outlet />
+            <div className="app-outlet">
+                <Outlet />
+            </div>
             <Footer />
-        </>
+        </div>
     )
 }
 

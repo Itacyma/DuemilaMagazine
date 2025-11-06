@@ -1,7 +1,7 @@
 
 
 .login-wrapper {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,4 +44,10 @@
 .auth-form .btn-outline-orange:disabled {
   background: #ffb199;
   color: #fff;
+}
+
+/* Specific spacing for the registration page */
+.register-wrapper .login-content {
+  margin-top: 3.5rem; /* add vertical spacing above the registration card */
+  margin-bottom: 3.5rem; /* also add spacing below so the card doesn't touch footer */
 }

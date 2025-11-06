@@ -115,3 +115,16 @@ html, body, #root {
   font-weight: 700;
   letter-spacing: 1px;
 }
+
+/* Main outlet grows to push footer down */
+.app-outlet {
+  flex: 1; /* allows outlet to grow and push footer down */
+  margin-bottom: 0; /* no spacing to avoid white gap */
+}
+
+/* Layout container to enforce sticky footer */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* at least full viewport height */
+}

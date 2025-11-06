@@ -1,8 +1,8 @@
 .footer-navbar {
   min-height: 5rem;
-  padding-top: 2rem;
+  padding-top: 0;
   padding-bottom: 2rem;
-  margin-top: 6rem;
+  margin-top: 0; /* removed margin-top to avoid white gap */
 }
 
 .footer-container {

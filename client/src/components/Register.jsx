@@ -97,7 +97,7 @@ function RegisterForm(props) {
 
 function RegisterPage(props) {
     return (
-        <div className="login-wrapper">
+        <div className="login-wrapper register-wrapper">
             <div className="login-content">
                 <Container>
                     <h2 className="login-title mb-5">Registrazione</h2>
