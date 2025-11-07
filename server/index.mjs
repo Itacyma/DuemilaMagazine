@@ -282,6 +282,18 @@ app.post('/api/articles/:id/likes', isLoggedIn, async (req, res) => {
   }
 });
 
+app.get('/api/articles/:id/likes/check', isLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const articleId = Number(req.params.id);
+    const isLiked = await DAO.isLiked(userId, articleId);
+    res.json({ isLiked });
+  } catch (err) {
+    console.error('Check like error:', err);
+    res.status(500).json({ error: 'Errore nel controllo like.' });
+  }
+});
+
 app.get('/api/categories', async (req, res) => {
   try {
     const categories = await DAO.getAllCategories();

@@ -3,8 +3,10 @@ import { Alert, Button, Container, Col, Row, Spinner, Form } from "react-bootstr
 import { useNavigate } from "react-router";
 import { 
     incrementArticleLikes,
+    changeLike,
     changeFavourite,
     isFavourite,
+    isLiked,
     getCategories,
     updateArticle,
     checkArticleOwnership
@@ -16,8 +18,10 @@ import '../style/ArticlePage.css';
 function ArticlePage(props) {
     const { article, user } = props;
     const [favourite, setFavourite] = useState(null);
+    const [liked, setLiked] = useState(null);
     const navigate = useNavigate();
     const [favLoading, setFavLoading] = useState(false);
+    const [likeLoading, setLikeLoading] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
     
     // Edit mode states
@@ -30,7 +34,18 @@ function ArticlePage(props) {
     const [extractError, setExtractError] = useState('');
 
   const handleLike = async () => {
-    await incrementArticleLikes(article.id);
+    if (!article?.id) return;
+    setLikeLoading(true);
+    try {
+        const res = await changeLike(article.id);
+        if (typeof res === 'boolean') setLiked(res === true);
+        else if (res && typeof res.isLiked !== 'undefined') setLiked(res.isLiked === true);
+    } catch (err) {
+        if (err.status === 401) navigate('/login');
+        else alert(err.message || 'Errore nella gestione del like');
+    } finally {
+        setLikeLoading(false);
+    }
   };
 
     const handleFavourite = async () => {
@@ -62,6 +77,19 @@ function ArticlePage(props) {
             }
         };
         fetchFavourite();
+    }, [article?.id]);
+
+    useEffect(() => {
+        const fetchLike = async () => {
+            if (!article?.id) return;
+            try {
+                const res = await isLiked(article.id);
+                setLiked(res === true);
+            } catch (err) {
+                setLiked(false);
+            }
+        };
+        fetchLike();
     }, [article?.id]);
 
     useEffect(() => {
@@ -250,11 +278,12 @@ function ArticlePage(props) {
                             ) : (
                                 <>
                                     <Button 
-                                        title="Metti Mi Piace all'articolo" 
-                                        onClick={handleLike}
-                                        className="like-btn"
+                                        title={liked ? "Rimuovi Mi Piace" : "Metti Mi Piace all'articolo"}
+                                        onClick={likeLoading ? null : handleLike}
+                                        className={"like-btn" + (liked ? " active" : "")}
                                     >
-                                        <i className="bi bi-hand-thumbs-up"></i>
+                                        <i className={liked ? "bi bi-hand-thumbs-up-fill" : "bi bi-hand-thumbs-up"}></i>
+                                        {likeLoading && <Spinner animation="border" size="sm" />}
                                     </Button>
                                     <Button
                                         title={favourite ? "Rimuovi dai preferiti" : "Salva l'articolo tra i preferiti"}

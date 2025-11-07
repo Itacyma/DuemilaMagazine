@@ -57,6 +57,11 @@
   color: #63a7d5;
   border-color: #63a7d5;
 }
+.article-action-buttons .like-btn.active {
+  background-color: #63a7d5;
+  color: #fff;
+  border-color: #63a7d5;
+}
 
 /* Bookmark: giallo #FFD600 */
 .article-action-buttons .bookmark-btn {

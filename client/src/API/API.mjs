@@ -171,6 +171,18 @@ export async function incrementArticleLikes(articleId) {
     });
 }
 
+export async function changeLike(articleId) {
+    const response = await fetch(`${SERVER_URL}/api/articles/${articleId}/likes`, {
+        method: "POST",
+        credentials: "include"
+    });
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.error || "Errore nell'aggiunta o rimozione del like");
+    }
+    return data;
+}
+
 export async function getCategories() {
     const response = await fetch(`${SERVER_URL}/api/categories`);
     if (!response.ok) throw new Error("Errore nel recupero delle categorie");
@@ -222,6 +234,15 @@ export async function isFavourite(articleId) {
     if (!response.ok) throw new Error("Errore nel controllo preferiti");
     const data = await response.json();
     return data.isFavourite;
+}
+
+export async function isLiked(articleId) {
+    const response = await fetch(`${SERVER_URL}/api/articles/${articleId}/likes/check`, {
+        credentials: "include"
+    });
+    if (!response.ok) throw new Error("Errore nel controllo like");
+    const data = await response.json();
+    return data.isLiked;
 }
 
 export async function checkArticleOwnership(articleId) {

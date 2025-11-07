@@ -587,6 +587,19 @@ const DAO = {
         });
     },
 
+    isLiked(userId, articleId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                "SELECT like FROM Interactions WHERE user = ? AND article = ?",
+                [userId, articleId],
+                (err, row) => {
+                    if (err) return reject(err);
+                    resolve(row ? row.like === 1 : false);
+                }
+            );
+        });
+    },
+
     getFavouritesByUser(userId) {
         return new Promise((resolve, reject) => {
             db.all(
