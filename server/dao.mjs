@@ -304,6 +304,32 @@ const DAO = {
         });
     },
 
+    incrementArticleLikes(articleId) {
+        return new Promise((resolve, reject) => {
+            db.run(
+                "UPDATE Articles SET likes = likes + 1 WHERE id = ?",
+                [articleId],
+                function(err) {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    },
+
+    decrementArticleLikes(articleId) {
+        return new Promise((resolve, reject) => {
+            db.run(
+                "UPDATE Articles SET likes = likes - 1 WHERE id = ?",
+                [articleId],
+                function(err) {
+                    if (err) return reject(err);
+                    resolve();
+                }
+            );
+        });
+    },
+
     incrementArticleVisuals(articleId) {
         return new Promise((resolve, reject) => {
             db.run(
@@ -444,36 +470,118 @@ const DAO = {
         });
     },
 
-    // FAVOURITES
-    addToFavourites(userId, articleId) {
+    // INTERACTIONS
+    createOrGetInteraction(userId, articleId) {
         return new Promise((resolve, reject) => {
-            db.run(
-                "INSERT INTO Favourites (user, article) VALUES (?, ?)",
+            // Prima controlla se esiste già
+            db.get(
+                "SELECT * FROM Interactions WHERE user = ? AND article = ?",
                 [userId, articleId],
-                function(err) {
-                    if (err) {
-                        if (err.message.includes('UNIQUE constraint failed')) {
-                            return reject(new Error('Articolo già nei preferiti'));
-                        }
-                        return reject(err);
+                (err, row) => {
+                    if (err) return reject(err);
+                    if (row) {
+                        // Esiste già, incrementa visual e restituiscilo
+                        db.run(
+                            "UPDATE Interactions SET visual = visual + 1 WHERE user = ? AND article = ?",
+                            [userId, articleId],
+                            function(err) {
+                                if (err) return reject(err);
+                                // Recupera la row aggiornata
+                                db.get("SELECT * FROM Interactions WHERE user = ? AND article = ?", [userId, articleId], (err, updatedRow) => {
+                                    if (err) return reject(err);
+                                    resolve(updatedRow);
+                                });
+                            }
+                        );
+                    } else {
+                        // Non esiste, crealo
+                        db.run(
+                            "INSERT INTO Interactions (user, article, visual, like, favourite, comment) VALUES (?, ?, 1, 0, 0, 0)",
+                            [userId, articleId],
+                            function(err) {
+                                if (err) return reject(err);
+                                db.get("SELECT * FROM Interactions WHERE id = ?", [this.lastID], (err, newRow) => {
+                                    if (err) return reject(err);
+                                    resolve(newRow);
+                                });
+                            }
+                        );
                     }
-                    resolve(this.lastID);
                 }
             );
         });
     },
 
-    removeFromFavourites(userId, articleId) {
+    incrementVisual(userId, articleId) {
         return new Promise((resolve, reject) => {
             db.run(
-                "DELETE FROM Favourites WHERE user = ? AND article = ?",
+                "UPDATE Interactions SET visual = visual + 1 WHERE user = ? AND article = ?",
                 [userId, articleId],
                 function(err) {
                     if (err) return reject(err);
                     if (this.changes === 0) {
-                        return reject(new Error('Articolo non trovato nei preferiti'));
+                        return reject(new Error('Interazione non trovata'));
                     }
                     resolve();
+                }
+            );
+        });
+    },
+
+    toggleLike(userId, articleId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                "SELECT like FROM Interactions WHERE user = ? AND article = ?",
+                [userId, articleId],
+                (err, row) => {
+                    if (err) return reject(err);
+                    if (!row) return reject(new Error('Interazione non trovata'));
+                    
+                    const newLikeValue = row.like === 1 ? 0 : 1;
+                    db.run(
+                        "UPDATE Interactions SET like = ? WHERE user = ? AND article = ?",
+                        [newLikeValue, userId, articleId],
+                        function(err) {
+                            if (err) return reject(err);
+                            resolve(newLikeValue);
+                        }
+                    );
+                }
+            );
+        });
+    },
+
+    toggleFavourite(userId, articleId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                "SELECT favourite FROM Interactions WHERE user = ? AND article = ?",
+                [userId, articleId],
+                (err, row) => {
+                    if (err) return reject(err);
+                    if (!row) return reject(new Error('Interazione non trovata'));
+                    
+                    const newFavValue = row.favourite === 1 ? 0 : 1;
+                    db.run(
+                        "UPDATE Interactions SET favourite = ? WHERE user = ? AND article = ?",
+                        [newFavValue, userId, articleId],
+                        function(err) {
+                            if (err) return reject(err);
+                            resolve(newFavValue);
+                        }
+                    );
+                }
+            );
+        });
+    },
+
+    isFavourite(userId, articleId) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                "SELECT favourite FROM Interactions WHERE user = ? AND article = ?",
+                [userId, articleId],
+                (err, row) => {
+                    if (err) return reject(err);
+                    resolve(row ? row.favourite === 1 : false);
                 }
             );
         });
@@ -482,7 +590,7 @@ const DAO = {
     getFavouritesByUser(userId) {
         return new Promise((resolve, reject) => {
             db.all(
-                "SELECT * FROM Articles WHERE id IN (SELECT article FROM Favourites WHERE user = ?)",
+                "SELECT * FROM Articles WHERE id IN (SELECT article FROM Interactions WHERE user = ? AND favourite = 1)",
                 [userId],
                 async (err, rows) => {
                     if (err) return reject(err);
@@ -533,19 +641,6 @@ const DAO = {
                         );
                     }));
                     resolve(articles);
-                }
-            );
-        });
-    },
-
-    isFavourite(userId, articleId) {
-        return new Promise((resolve, reject) => {
-            db.get(
-                "SELECT * FROM Favourites WHERE user = ? AND article = ?",
-                [userId, articleId],
-                (err, row) => {
-                    if (err) return reject(err);
-                    resolve(!!row);
                 }
             );
         });

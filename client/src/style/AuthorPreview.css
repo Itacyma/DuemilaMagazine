@@ -16,7 +16,7 @@
 .author-card .card-title.author-name {
   color: #662e9b;
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin: 0;
 }
@@ -71,18 +71,18 @@
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 600;
-  border: 2px solid #ffb700;
-  background-color: #ffe066;
+  border: 2px solid #662e9b;
+  background-color: rgba(102, 46, 155, 0.15);
   color: #662e9b;
   transition: all 0.3s ease;
 }
 
 .btn-view-author:hover {
-  background-color: #ffb700;
-  border-color: #ff8223;
-  color: #662e9b;
+  background-color: #662e9b;
+  border-color: #662e9b;
+  color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(255, 183, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(102, 46, 155, 0.4);
 }
 
 .btn-view-author i {

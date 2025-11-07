@@ -41,21 +41,18 @@ CREATE TABLE IF NOT EXISTS "Comments" (
 	FOREIGN KEY("article") REFERENCES "Articles"("id"),
 	FOREIGN KEY("user") REFERENCES "Users"("id")
 );
-CREATE TABLE IF NOT EXISTS "Favourites" (
+CREATE TABLE IF NOT EXISTS "Interactions" (
 	"id"	INTEGER NOT NULL UNIQUE,
-	"user"	INTEGER NOT NULL UNIQUE,
-	"article"	INTEGER NOT NULL UNIQUE,
-	PRIMARY KEY("id" AUTOINCREMENT),
-	CONSTRAINT "article" FOREIGN KEY("article") REFERENCES "Articles"("id"),
-	CONSTRAINT "user" FOREIGN KEY("user") REFERENCES "Users"("id")
-);
-CREATE TABLE IF NOT EXISTS "Likes" (
-	"id"	INTEGER NOT NULL UNIQUE,
-	"article"	INTEGER NOT NULL,
 	"user"	INTEGER NOT NULL,
-	PRIMARY KEY("id","article"),
+	"article"	INTEGER NOT NULL,
+	"visual"	INTEGER NOT NULL DEFAULT 1,
+	"like"	INTEGER NOT NULL DEFAULT 0,
+	"favourite"	INTEGER NOT NULL DEFAULT 0,
+	"comment"	INTEGER NOT NULL DEFAULT 0,
+	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("article") REFERENCES "Articles"("id"),
-	FOREIGN KEY("user") REFERENCES "Users"("id")
+	FOREIGN KEY("user") REFERENCES "Users"("id"),
+	UNIQUE("user", "article")
 );
 CREATE TABLE IF NOT EXISTS "Users" (
 	"id"	INTEGER NOT NULL UNIQUE,
@@ -96,7 +93,6 @@ INSERT INTO "Categories" ("id","name") VALUES (1,'altro'),
  (5,'etica'),
  (6,'storia'),
  (7,'politica');
-INSERT INTO "Favourites" ("id","user","article") VALUES (10,3,5);
 INSERT INTO "Users" ("id","username","password","name","salt","type","game") VALUES (1,'root@gmail.com','$2b$10$MAWMy83HNlR2ynvQDsDS7eDuYSUMb6qrNYNzhBuA831.5hyjNLe6y','Primo Utente','$2b$10$MAWMy83HNlR2ynvQDsDS7e','admin',1),
  (2,'claudiomartini@gmail.com','$2b$10$bHZKYZw89WYTSDxQtp69VOrvkXnXEXwX5sFsDeH1W6N5U9so/GAU6','Claudio Martini','$2b$10$bHZKYZw89WYTSDxQtp69VO','writer',1),
  (3,'chiara@gmail.com','$2b$10$ddxNiYX80yTsWgVhVY88y.O10Q8Z9uj/03X4BfwEEAwxuIIPlhy.S','Chiara D''Acunto','$2b$10$ddxNiYX80yTsWgVhVY88y.','writer',0);

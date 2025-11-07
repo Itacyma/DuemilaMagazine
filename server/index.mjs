@@ -188,10 +188,21 @@ app.post('/api/articles/own/new', isLoggedIn, async (req, res) => {
 
 app.post('/api/articles/:id/visuals', isLoggedIn, async (req, res) => {
   try {
-    const articleId = req.params.id;
-    await DAO.incrementArticleVisuals(articleId);
+    const userId = req.user.id;
+    const articleId = Number(req.params.id);
+    
+    // Crea o recupera l'interazione
+    const interaction = await DAO.createOrGetInteraction(userId, articleId);
+    
+    // Incrementa il contatore visuals SOLO se è stata appena creata (visual = 1)
+    // Se visual > 1, significa che l'utente ha già visualizzato l'articolo
+    if (interaction.visual === 1) {
+      await DAO.incrementArticleVisuals(articleId);
+    }
+    
     res.status(204).end();
   } catch (err) {
+    console.error('Visual increment error:', err);
     res.status(500).json({ error: 'Errore nell\'incremento delle visualizzazioni.' });
   }
 });
@@ -251,11 +262,23 @@ app.put('/api/articles/:id', isLoggedIn, async (req, res) => {
 
 app.post('/api/articles/:id/likes', isLoggedIn, async (req, res) => {
   try {
-    const articleId = req.params.id;
-    await DAO.incrementArticleLikes(articleId);
-    res.status(204).end();
+    const userId = req.user.id;
+    const articleId = Number(req.params.id);
+    
+    // Toggle del like (l'interazione deve già esistere)
+    const newLikeValue = await DAO.toggleLike(userId, articleId);
+    
+    // Aggiorna il contatore nell'articolo (incrementa o decrementa)
+    if (newLikeValue === 1) {
+      await DAO.incrementArticleLikes(articleId);
+    } else {
+      await DAO.decrementArticleLikes(articleId);
+    }
+    
+    res.json({ isLiked: newLikeValue === 1 });
   } catch (err) {
-    res.status(500).json({ error: 'Errore nell\'incremento dei like.' });
+    console.error('Like toggle error:', err);
+    res.status(500).json({ error: 'Errore nel toggle del like.' });
   }
 });
 
@@ -284,31 +307,18 @@ app.post('/api/favourites/:articleId', isLoggedIn, async (req, res) => {
   try {
     const userId = req.user.id;
     const articleId = Number(req.params.articleId);
+    
     if (!Number.isInteger(articleId)) {
       return res.status(400).json({ error: 'Id articolo non valido' });
     }
-
-    // Controlla se è già nei preferiti
-    const currentlyFav = await DAO.isFavourite(userId, articleId);
-
-    if (currentlyFav) {
-      // se presente, rimuovi
-      await DAO.removeFromFavourites(userId, articleId);
-    } else {
-      // altrimenti aggiungi
-      await DAO.addToFavourites(userId, articleId);
-    }
-
-    // restituisci lo stato attuale
-    const nowFav = await DAO.isFavourite(userId, articleId);
-    return res.status(200).json({ isFavourite: !!nowFav });
+    
+    // Toggle del preferito (l'interazione deve già esistere)
+    const newFavValue = await DAO.toggleFavourite(userId, articleId);
+    
+    return res.status(200).json({ isFavourite: newFavValue === 1 });
   } catch (err) {
-    // gestisci errori prevedibili
-    if (err && (err.message === 'Articolo già nei preferiti' || err.message === 'Articolo non trovato nei preferiti')) {
-      return res.status(409).json({ error: err.message });
-    }
     console.error('Favourite toggle error:', err);
-    return res.status(500).json({ error: 'Errore nell\'aggiunta o rimozione dai preferiti.' });
+    return res.status(500).json({ error: 'Errore nel toggle dei preferiti.' });
   }
 });
 

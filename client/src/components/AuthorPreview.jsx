@@ -53,11 +53,11 @@ function AuthorPreview(props) {
                     )}
                     
                     <Button 
-                        variant="warning" 
+                        variant="primary" 
                         className="btn-view-author"
                         onClick={handleViewAuthor}
                     >
-                        <i className="bi bi-person-circle"></i> Vai alla Pagina
+                        <i className="bi bi-person-fill"></i> Visita il profilo
                     </Button>
                     
                     {author.email && (
