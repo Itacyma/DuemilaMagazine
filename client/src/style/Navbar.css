@@ -36,3 +36,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+/* Offcanvas title custom styling */
+.offcanvas-title-custom {
+  color: #662e9b;
+  font-weight: 600;
+}

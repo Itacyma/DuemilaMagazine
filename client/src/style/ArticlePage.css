@@ -117,3 +117,197 @@
   text-align: justify;
 }
 
+/* Guest interaction box shown when user is not logged in */
+.guest-interact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid #662e9b;
+  background-color: rgba(102,46,155,0.12);
+  border-radius: 10px;
+  max-width: 36rem;
+  width: 100%;
+}
+.guest-interact h1, .guest-interact h5 {
+  margin: 0;
+  color: #662e9b;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+}
+.guest-interact p {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.guest-interact .login-cta {
+  color: #662e9b;
+  border-color: #662e9b;
+  background-color: transparent;
+  border-width: 3px;
+}
+.guest-interact .login-cta:hover,
+.guest-interact .login-cta:focus {
+  background-color: #662e9b;
+  color: #fff;
+  border-color: #662e9b;
+}
+
+/* Auth toast container: centered below navbar, responsive width */
+.auth-toast-container {
+  position: fixed;
+  top: 4.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  max-width: 94vw;
+}
+
+/* Toast card with header + body layout */
+.toast-custom {
+  border: none;
+  background: #fff;
+  color: #333;
+  min-width: 320px;
+  width: min(680px, 94vw);
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 12px 36px rgba(220,53,69,0.15), 0 2px 8px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+/* Header: compact red strip with icon and close button */
+.toast-custom .toast-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  background: #dc3545;
+  color: #fff;
+  padding: 0.6rem 0.85rem;
+  border: none;
+}
+.toast-custom .toast-header::before {
+  content: '⚠';
+  font-size: 1.3rem;
+}
+.toast-custom .toast-header strong,
+.toast-custom .toast-header .me-auto {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0;
+  color: #fff;
+  flex: 1;
+}
+.toast-custom .btn-close { display: none !important; }
+
+.toast-close-custom {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  border: none;
+  color: #fff; /* white X */
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  font-size: 1.6rem;
+  font-weight: 400;
+  width: 1.8rem;
+  height: 1.8rem;
+  line-height: 1;
+  opacity: 0.95;
+  transition: transform .12s ease, opacity .12s ease;
+}
+.toast-close-custom:hover { transform: translateY(-1px); opacity: 1; }
+.toast-close-custom:focus { box-shadow: none; outline: none; }
+
+/* Body: white with message and CTA buttons */
+.toast-custom .toast-body {
+  padding: 0.9rem 0.85rem;
+  background: #fff;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.toast-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+.toast-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.toast-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+.toast-sub {
+  font-size: 0.88rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* CTA buttons: side-by-side on desktop, stack on mobile */
+.toast-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.btn-cta-primary {
+  background: transparent;
+  color: #dc3545;
+  border: 1.5px solid #dc3545;
+  padding: 0.42rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-cta-primary:hover {
+  background: #f8f9fa;
+  border-color: #c82333;
+  color: #c82333;
+}
+
+.btn-cta-outline {
+  background: #fff;
+  color: #dc3545;
+  border: 1.5px solid #dc3545;
+  padding: 0.42rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-cta-outline:hover {
+  background: #dc3545;
+  color: #fff;
+  border-color: #c82333;
+}
+
+@media (max-width: 540px) {
+  .auth-toast-container { top: 3.7rem; }
+  .toast-custom { width: calc(100% - 1rem); }
+  .toast-header { padding: 0.5rem 0.7rem; }
+  .toast-body { padding: 0.75rem 0.7rem; }
+  .toast-actions { flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0.5rem; }
+  .btn-cta-primary, .btn-cta-outline { width: 100%; text-align: center; padding: 0.5rem; }
+}
+

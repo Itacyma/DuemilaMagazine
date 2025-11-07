@@ -657,6 +657,66 @@ const DAO = {
                 }
             );
         });
+    },
+
+    getFrequentsByUser(userId) {
+        return new Promise((resolve, reject) => {
+            // Seleziona i 5 articoli con il maggior numero di visual per questo utente
+            db.all(
+                "SELECT a.* FROM Articles a JOIN Interactions i ON a.id = i.article WHERE i.user = ? ORDER BY i.visual DESC LIMIT 5",
+                [userId],
+                async (err, rows) => {
+                    if (err) return reject(err);
+                    const articles = await Promise.all(rows.map(async (row) => {
+                        let authorName = "";
+                        let authorNickname = "";
+
+                        // Recupera i dati dell'autore direttamente tramite author_id
+                        if (row.author) {
+                            const authorData = await new Promise((res, rej) => {
+                                db.get("SELECT user, nickname FROM Authors WHERE id = ?", [row.author], (err, authorRow) => {
+                                    if (err) return res({ user: null, nickname: "" });
+                                    res(authorRow ? { user: authorRow.user, nickname: authorRow.nickname } : { user: null, nickname: "" });
+                                });
+                            });
+
+                            authorNickname = authorData.nickname || "";
+
+                            // Recupera il nome dell'utente
+                            if (authorData.user) {
+                                const userData = await new Promise((res, rej) => {
+                                    db.get("SELECT name FROM Users WHERE id = ?", [authorData.user], (err, userRow) => {
+                                        if (err) return res({ name: "" });
+                                        res(userRow ? { name: userRow.name } : { name: "" });
+                                    });
+                                });
+                                authorName = userData.name;
+                            }
+                        }
+
+                        let categoryName = "";
+                        if (row.category) {
+                            categoryName = await getCategoryNameById(row.category);
+                        }
+                        return new Article(
+                            row.id,
+                            authorName,
+                            row.date,
+                            row.title,
+                            row.extract,
+                            row.text,
+                            categoryName,
+                            row.category,
+                            row.visuals,
+                            row.likes,
+                            row.comments,
+                            authorNickname
+                        );
+                    }));
+                    resolve(articles);
+                }
+            );
+        });
     }
 };
 

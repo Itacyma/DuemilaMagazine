@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, Col, Row, Spinner, Form } from "react-bootstrap";
+import { Alert, Button, Container, Col, Row, Spinner, Form, Toast } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { 
     incrementArticleLikes,
@@ -32,6 +32,7 @@ function ArticlePage(props) {
     const [editCategory, setEditCategory] = useState('');
     const [categories, setCategories] = useState([]);
     const [extractError, setExtractError] = useState('');
+    const [showAuthBanner, setShowAuthBanner] = useState(false);
 
   const handleLike = async () => {
     if (!article?.id) return;
@@ -266,7 +267,7 @@ function ArticlePage(props) {
                         >
                             <i className="bi bi-arrow-left-circle"></i>
                         </Button>
-                        <div className="article-action-buttons" style={isOwner ? { marginRight: "1rem" } : {}}>
+                        {user ? (<div className="article-action-buttons" style={isOwner ? { marginRight: "1rem" } : {}}>
                             {isOwner ? (
                                 <Button 
                                     title="Modifica articolo" 
@@ -301,7 +302,54 @@ function ArticlePage(props) {
                                     </Button>
                                 </>
                             )}
-                        </div>
+                        </div>) : (
+                        <>
+                            {showAuthBanner && (
+                                <div className="auth-toast-container">
+                                    <Toast onClose={() => setShowAuthBanner(false)} show={showAuthBanner} className="toast-custom">
+                                        <Toast.Header>
+                                            <strong className="me-auto">Accesso richiesto</strong>
+                                            <button type="button" className="toast-close-custom" aria-label="Close" onClick={() => setShowAuthBanner(false)}>&times;</button>
+                                        </Toast.Header>
+                                        <Toast.Body>
+                                            <div className="toast-content">
+                                                <div className="toast-message">
+                                                    <div className="toast-title">Devi essere registrato</div>
+                                                    <div className="toast-sub">Effettua il login o registrati per interagire con gli articoli.</div>
+                                                </div>
+                                                <div className="toast-actions">
+                                                    <Button className="btn-cta-primary" onClick={() => { setShowAuthBanner(false); navigate('/login'); }}>Accedi</Button>
+                                                    <Button className="btn-cta-outline" onClick={() => { setShowAuthBanner(false); navigate('/register'); }}>Registrati</Button>
+                                                </div>
+                                            </div>
+                                        </Toast.Body>
+                                    </Toast>
+                                </div>
+                            )}
+                            <div className="article-action-buttons">
+                                <Button
+                                    title="Metti Mi Piace all'articolo"
+                                    onClick={() => setShowAuthBanner(true)}
+                                    className="like-btn"
+                                >
+                                    <i className="bi bi-hand-thumbs-up"></i>
+                                </Button>
+                                <Button
+                                    title="Salva l'articolo tra i preferiti"
+                                    onClick={() => setShowAuthBanner(true)}
+                                    className="bookmark-btn"
+                                >
+                                    <i className="bi bi-bookmark-star"></i>
+                                </Button>
+                                <Button
+                                    title="Commenta l'articolo"
+                                    onClick={() => setShowAuthBanner(true)}
+                                    className="comment-btn"
+                                >
+                                    <i className="bi bi-chat-dots"></i>
+                                </Button>
+                            </div>
+                        </>)}
                     </div>
                 )}
             </Card.Body>

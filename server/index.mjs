@@ -346,6 +346,16 @@ app.get('/api/favourites', isLoggedIn, async (req, res) => {
   }
 });
 
+app.get('/api/frequents', isLoggedIn, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const frequents = await DAO.getFrequentsByUser(userId);
+    res.json(frequents);
+  } catch (err) {
+    res.status(500).json({ error: 'Errore nel recupero degli articoli frequenti.' });
+  }
+});
+
 app.get('/api/favourites/:articleId/check', isLoggedIn, async (req, res) => {
   try {
     const userId = req.user.id;

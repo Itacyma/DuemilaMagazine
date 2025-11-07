@@ -60,7 +60,7 @@ function NavbarCustom(props) {
                                 <ButtonCustom variant="logout" handleLogout={handleLogout} />
                             )
                         }
-                        <Button variant="outline-secondary" onClick={handleShow} className="ms-2">
+                        <Button variant="outline-light" onClick={handleShow} className="ms-2">
                             <span style={{fontSize: '1.5rem'}}>&#9776;</span>
                         </Button>
                     </Nav>
@@ -69,7 +69,7 @@ function NavbarCustom(props) {
 
             <Offcanvas show={showMenu} onHide={handleClose} placement="start">
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Menu</Offcanvas.Title>
+                    <Offcanvas.Title className="offcanvas-title-custom">Menu</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <Nav className="flex-column">

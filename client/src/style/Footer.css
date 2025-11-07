@@ -1,8 +1,10 @@
 .footer-navbar {
   min-height: 5rem;
   padding-top: 0;
-  padding-bottom: 2rem;
-  margin-top: 0; /* removed margin-top to avoid white gap */
+  padding-bottom: 0 !important; /* override bootstrap default padding */
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 0;
 }
 
 .footer-container {
@@ -16,7 +18,6 @@
 .footer-text {
   color: #fff;
   font-size: 0.9rem;
-  margin-left: 0;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0;
+  line-height: 1.5rem;
 }

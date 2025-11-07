@@ -236,6 +236,30 @@ export async function isFavourite(articleId) {
     return data.isFavourite;
 }
 
+export async function getFrequents() {
+    const response = await fetch(`${SERVER_URL}/api/frequents`, {
+        credentials: "include"
+    });
+    if (!response.ok) throw new Error("Errore nel recupero degli articoli frequenti");
+    const articles = await response.json();
+    return articles.map(a =>
+        new Article(
+            a.id,
+            a.author,
+            a.date,
+            a.title,
+            a.extract,
+            a.text,
+            a.category,
+            a.categoryId,
+            a.visuals,
+            a.likes,
+            a.comments,
+            a.nickname
+        )
+    );
+}
+
 export async function isLiked(articleId) {
     const response = await fetch(`${SERVER_URL}/api/articles/${articleId}/likes/check`, {
         credentials: "include"

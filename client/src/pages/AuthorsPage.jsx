@@ -28,7 +28,7 @@ function AuthorsPage(props) {
     return (
         <Container className="authors-page">
             <h1 className="section-title">I Nostri Autori</h1>
-            <hr style={{ borderTop: '3px solid #662E9B', margin: '3rem 0' }} />
+            <hr style={{ borderTop: '3px solid #662E9B', margin: '0 0 4rem' }} />
             
             {loading ? (
                 <div className="d-flex justify-content-center my-5">
