@@ -73,7 +73,7 @@ function AuthorPage(props) {
                 <Row className="align-items-center">
                     <Col md={4} className="text-center">
                         <img 
-                            src={author.photo || photoPlaceholder}
+                            src={author.profile_photo ? `http://localhost:3001${author.profile_photo}` : photoPlaceholder}
                             alt={author.nickname || 'Autore'}
                             className="author-page-photo"
                             onError={(e) => {

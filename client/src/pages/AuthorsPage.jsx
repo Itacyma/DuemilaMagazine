@@ -42,7 +42,7 @@ function AuthorsPage(props) {
                 <>
                     <div className="row d-flex justify-content-center authors-list-row">
                         {(showAll ? authors : authors.slice(0, 6)).map((author) => (
-                            <div className="col-12 col-md-4 mb-5 d-flex justify-content-center" key={author.id}>
+                            <div className="col-12 col-md-4 mb-5 d-flex" key={author.id}>
                                 <AuthorPreview 
                                     author={author}
                                     setSelectedAuthorNickname={setSelectedAuthorNickname}

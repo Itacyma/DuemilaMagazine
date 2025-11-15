@@ -2,7 +2,7 @@ import crypto from "crypto";
 import sqlite from "sqlite3";
 import dayjs from "dayjs";
 import bcrypt from "bcrypt";
-import { User, Article, Author } from "./models.mjs";
+import { User, Article, Author, Event } from "./models.mjs";
 
 const db = new sqlite.Database("./database/dbDM.sqlite", (err) => {
     if (err) throw err;
@@ -369,18 +369,6 @@ const DAO = {
         });
     },
 
-    createLikeEntry(articleId, userId) {
-        return new Promise((resolve, reject) => {
-            db.run(
-                "INSERT INTO Likes (article, user) VALUES (?, ?)",
-                [articleId, userId],
-                function(err) {
-                    if (err) return reject(err);
-                    resolve(this.lastID);
-                }
-            );
-        });
-    },
 
     getAllCategories() {
         return new Promise((resolve, reject) => {
@@ -397,7 +385,7 @@ const DAO = {
             db.get("SELECT * FROM Authors WHERE user = ?", [userId], (err, row) => {
                 if (err) return reject(err);
                 if (!row) return resolve(null);
-                resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation));
+                resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
             });
         });
     },
@@ -407,7 +395,7 @@ const DAO = {
             db.get("SELECT * FROM Authors WHERE id = ?", [authorId], (err, row) => {
                 if (err) return reject(err);
                 if (!row) return resolve(null);
-                resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation));
+                resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
             });
         });
     },
@@ -416,17 +404,17 @@ const DAO = {
         return new Promise((resolve, reject) => {
             db.all("SELECT * FROM Authors", [], (err, rows) => {
                 if (err) return reject(err);
-                const authors = rows.map(row => new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation));
+                const authors = rows.map(row => new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
                 resolve(authors);
             });
         });
     },
 
-    createAuthor({ user, age, nickname, insta, email, presentation }) {
+    createAuthor({ user, age, nickname, insta, email, presentation, profile_photo }) {
         return new Promise((resolve, reject) => {
             db.run(
-                "INSERT INTO Authors (user, age, nickname, insta, email, presentation) VALUES (?, ?, ?, ?, ?, ?)",
-                [user, age, nickname, insta, email, presentation],
+                "INSERT INTO Authors (user, age, nickname, insta, email, presentation, profile_photo) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                [user, age, nickname, insta, email, presentation, profile_photo],
                 function(err) {
                     if (err) {
                         if (err.message && err.message.includes('UNIQUE constraint failed')) {
@@ -436,10 +424,20 @@ const DAO = {
                     }
                     db.get("SELECT * FROM Authors WHERE id = ?", [this.lastID], (err, row) => {
                         if (err) return reject(err);
-                        resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation));
+                        resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
                     });
                 }
             );
+        });
+    },
+
+    getAuthorByNickname(nickname) {
+        return new Promise((resolve, reject) => {
+            db.get("SELECT * FROM Authors WHERE nickname = ?", [nickname], (err, row) => {
+                if (err) return reject(err);
+                if (!row) return resolve(null);
+                resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
+            });
         });
     },
 
@@ -453,7 +451,7 @@ const DAO = {
                     if (this.changes === 0) return reject(new Error('Autore non trovato'));
                     db.get("SELECT * FROM Authors WHERE id = ?", [id], (err, row) => {
                         if (err) return reject(err);
-                        resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation));
+                        resolve(new Author(row.id, row.user, row.age, row.nickname, row.insta, row.email, row.presentation, row.profile_photo));
                     });
                 }
             );
@@ -714,6 +712,59 @@ const DAO = {
                         );
                     }));
                     resolve(articles);
+                }
+            );
+        });
+    },
+
+    // EVENTS
+    getAllEvents() {
+        return new Promise((resolve, reject) => {
+            db.all(
+                "SELECT * FROM Events ORDER BY date",
+                [],
+                (err, rows) => {
+                    if (err) return reject(err);
+                    const events = rows.map(row => new Event(
+                        row.id,
+                        row.title,
+                        row.category,
+                        row.date,
+                        row.location,
+                        row.address,
+                        row.extract,
+                        row.description,
+                        row.capacity,
+                        row.status,
+                        row.photo
+                    ));
+                    resolve(events);
+                }
+            );
+        });
+    },
+
+    getEventById(id) {
+        return new Promise((resolve, reject) => {
+            db.get(
+                "SELECT * FROM Events WHERE id = ?",
+                [id],
+                (err, row) => {
+                    if (err) return reject(err);
+                    if (!row) return resolve(null);
+                    resolve(new Event(
+                        row.id,
+                        row.title,
+                        row.category,
+                        row.date,
+                        row.location,
+                        row.address,
+                        row.extract,
+                        row.description,
+                        row.capacity,
+                        row.status,
+                        row.photo
+                    ));
                 }
             );
         });

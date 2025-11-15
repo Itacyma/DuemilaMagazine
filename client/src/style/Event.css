@@ -1,0 +1,244 @@
+.event-card {
+  max-width: 800px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+/* Carousel styling */
+.event-carousel {
+  background: #f8f9fa;
+}
+
+.event-carousel-img-wrapper {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9ecef;
+}
+
+.event-carousel-img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-carousel .carousel-indicators {
+  bottom: 0.5rem;
+}
+
+.event-carousel .carousel-control-prev,
+.event-carousel .carousel-control-next {
+  width: 8%;
+  opacity: 0.7;
+}
+
+.event-carousel .carousel-control-prev:hover,
+.event-carousel .carousel-control-next:hover {
+  opacity: 1;
+}
+
+/* Card body */
+.event-body {
+  padding: 1.5rem;
+}
+
+/* Header section */
+.event-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.event-title {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #662e9b;
+  margin: 0;
+  flex: 1;
+}
+
+.event-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.event-category-badge,
+.event-status-badge {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.65rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Extract */
+.event-extract {
+  font-size: 1.05rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+
+/* Info section with icons - 2x2 grid */
+.event-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  position: relative;
+}
+
+/* Cross lines - vertical and horizontal */
+.event-info-grid::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: #662e9b;
+  transform: translateY(-50%);
+}
+
+.event-info-grid::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  bottom: 1rem;
+  width: 2px;
+  background: #662e9b;
+  transform: translateX(-50%);
+}
+
+.event-info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: #333;
+  position: relative;
+  z-index: 1;
+  background: #f8f9fa;
+  padding: 0.3rem;
+}
+
+.event-info-item i {
+  font-size: 1.2rem;
+  color: #662e9b;
+  min-width: 1.5rem;
+}
+
+/* Description */
+.event-description {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+  text-align: justify;
+  margin-bottom: 1.5rem;
+}
+
+/* Instagram button */
+.event-instagram-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.event-instagram-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  color: white;
+}
+
+.event-instagram-btn i {
+  font-size: 1.3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .event-card {
+    margin: 1rem;
+    border-radius: 10px;
+  }
+
+  .event-carousel-img-wrapper {
+    height: 280px;
+  }
+
+  .event-body {
+    padding: 1rem;
+  }
+
+  .event-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-title {
+    font-size: 1.5rem;
+  }
+
+  .event-badges {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .event-info {
+    padding: 0.8rem;
+  }
+
+  .event-info-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    padding: 0.8rem;
+  }
+
+  .event-instagram-btn {
+    font-size: 0.95rem;
+    padding: 0.8rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-carousel-img-wrapper {
+    height: 220px;
+  }
+
+  .event-title {
+    font-size: 1.3rem;
+  }
+
+  .event-extract {
+    font-size: 0.95rem;
+  }
+
+  .event-info-item {
+    font-size: 0.9rem;
+  }
+
+  .event-description {
+    font-size: 0.95rem;
+  }
+}

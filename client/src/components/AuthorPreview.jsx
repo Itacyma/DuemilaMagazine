@@ -28,7 +28,7 @@ function AuthorPreview(props) {
             {/* Foto autore */}
             <div className="author-photo-container">
                 <img 
-                    src={author.photo || photoPlaceholder} 
+                    src={author.profile_photo ? `http://localhost:3001${author.profile_photo}` : photoPlaceholder} 
                     className="author-photo"
                 />
             </div>

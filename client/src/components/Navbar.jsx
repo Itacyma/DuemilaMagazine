@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { Navbar, Nav, Container, Button, Offcanvas } from "react-bootstrap";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getMyAuthor } from '../API/API.mjs';
 import '../style/Navbar.css';
 
 
@@ -37,10 +38,31 @@ function NavbarCustom(props) {
 
     const { user, handleLogout, setLoading, setError } = props;
     const [showMenu, setShowMenu] = useState(false);
+    const [profilePhoto, setProfilePhoto] = useState(null);
     const navigate = useNavigate();
 
     const handleClose = () => setShowMenu(false);
     const handleShow = () => setShowMenu(true);
+
+    useEffect(() => {
+        const fetchProfilePhoto = async () => {
+            // Reset photo when user changes or logs out
+            setProfilePhoto(null);
+            
+            if (user && user.type === 'writer') {
+                try {
+                    const author = await getMyAuthor();
+                    if (author && author.profile_photo) {
+                        setProfilePhoto(`http://localhost:3001${author.profile_photo}`);
+                    }
+                } catch (err) {
+                    console.error('Error fetching profile photo:', err);
+                }
+            }
+        };
+
+        fetchProfilePhoto();
+    }, [user]);
 
     return (
         <>
@@ -53,6 +75,7 @@ function NavbarCustom(props) {
                         Duemila Magazine
                     </Navbar.Brand>
                     <Nav className="ms-auto d-flex align-items-center flex-row" style={{ gap: "0.5rem" }}>
+                        
                         {
                             !user ? (
                                 <ButtonCustom variant="login" setError={setError} />
@@ -60,6 +83,24 @@ function NavbarCustom(props) {
                                 <ButtonCustom variant="logout" handleLogout={handleLogout} />
                             )
                         }
+
+                        {user && (
+                            <div 
+                                className="navbar-profile-icon"
+                                onClick={() => navigate("/profile")}
+                            >
+                                {profilePhoto ? (
+                                    <img 
+                                        src={profilePhoto} 
+                                        alt="Profile" 
+                                        className="navbar-profile-photo"
+                                    />
+                                ) : (
+                                    <i className="bi bi-person-circle"></i>
+                                )}
+                            </div>
+                        )}
+
                         <Button variant="outline-light" onClick={handleShow} className="ms-2">
                             <span style={{fontSize: '1.5rem'}}>&#9776;</span>
                         </Button>
@@ -75,15 +116,15 @@ function NavbarCustom(props) {
                     <Nav className="flex-column">
                         <Nav.Link onClick={() => { navigate("/"); handleClose(); }}>Home</Nav.Link>
                         <Nav.Link onClick={() => { navigate("/authors"); handleClose(); }}>I nostri scrittori</Nav.Link>
-                        <Nav.Link onClick={() => { navigate("/news"); handleClose(); }}>Annunci</Nav.Link>
+                        <Nav.Link onClick={() => { navigate("/news"); handleClose(); }}>Notifiche</Nav.Link>
                         <Nav.Link onClick={() => { navigate("/events"); handleClose(); }}>Eventi</Nav.Link>
                         <div style={{height: '1rem'}} />
 
                         {user ? (
                             <>
+                                <Nav.Link onClick={() => { navigate("/profile"); handleClose(); }}>Profilo</Nav.Link>
                                 {user.type != "reader" && <Nav.Link onClick={() => { navigate("/myarticles"); handleClose(); }}>I miei articoli</Nav.Link>}
                                 <Nav.Link onClick={() => { navigate("/favourites"); handleClose(); }}>Preferiti</Nav.Link>
-                                <Nav.Link onClick={() => { navigate("/saved"); handleClose(); }}>Salvati per dopo</Nav.Link>
                                 <Nav.Link onClick={() => { handleLogout(); handleClose(); }}>Logout</Nav.Link>
                             </>
                         ) : (

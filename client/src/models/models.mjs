@@ -23,7 +23,7 @@ function Article(id, author, date, title, extract, text, category, categoryId, v
     this.nickname = nickname; // Author nickname
 }
 
-function Author(id, user, age, nickname, insta, email, presentation) {
+function Author(id, user, age, nickname, insta, email, presentation, profile_photo) {
     this.id = id;
     this.user = user;
     this.age = age;
@@ -31,7 +31,21 @@ function Author(id, user, age, nickname, insta, email, presentation) {
     this.insta = insta;
     this.email = email;
     this.presentation = presentation;
+    this.profile_photo = profile_photo;
 }
 
+function Event(id, title, category, date, location, address, extract, description, capacity, status, photo) {
+    this.id = id;
+    this.title = title;
+    this.category = category;
+    this.date = dayjs(date);
+    this.location = location;
+    this.address = address;
+    this.extract = extract;
+    this.description = description;
+    this.capacity = capacity;
+    this.status = status;
+    this.photo = photo;
+}
 
-export { User, Article, Author };
+export { User, Article, Author, Event };

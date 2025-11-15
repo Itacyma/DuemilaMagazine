@@ -1,4 +1,4 @@
-import { User, Article, Author } from "../models/models.mjs";
+import { User, Article, Author, Event } from "../models/models.mjs";
 import dayjs from "dayjs";
 
 const SERVER_URL = "http://localhost:3001";
@@ -43,11 +43,14 @@ export const logOut = async() => {
 }
 
 export const register = async (userData) => {
+    // userData può essere un oggetto JSON o un FormData (per upload file)
+    const isFormData = userData instanceof FormData;
+    
     const response = await fetch(SERVER_URL + '/api/register', {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: isFormData ? {} : { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(userData),
+        body: isFormData ? userData : JSON.stringify(userData),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -283,21 +286,21 @@ export async function getAllAuthors() {
     const response = await fetch(`${SERVER_URL}/api/authors`);
     if (!response.ok) throw new Error('Errore nel recupero degli autori');
     const authors = await response.json();
-    return authors.map(a => new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation));
+    return authors.map(a => new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation, a.profile_photo));
 }
 
 export async function getAuthorById(authorId) {
     const response = await fetch(`${SERVER_URL}/api/authors/${authorId}`);
     if (!response.ok) throw new Error('Errore nel recupero dell\'autore');
     const a = await response.json();
-    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation);
+    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation, a.profile_photo);
 }
 
 export async function getAuthorByUserId(userId) {
     const response = await fetch(`${SERVER_URL}/api/authors/user/${userId}`);
     if (!response.ok) throw new Error('Errore nel recupero dell\'autore per utente');
     const a = await response.json();
-    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation);
+    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation, a.profile_photo);
 }
 
 export async function getMyAuthor() {
@@ -306,7 +309,7 @@ export async function getMyAuthor() {
     });
     if (!response.ok) throw new Error('Errore nel recupero del tuo profilo autore');
     const a = await response.json();
-    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation);
+    return new Author(a.id, a.user, a.age, a.nickname, a.insta, a.email, a.presentation, a.profile_photo);
 }
 
 export async function createAuthor(authorData) {
@@ -318,7 +321,7 @@ export async function createAuthor(authorData) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Errore nella creazione del profilo autore');
-    return new Author(data.id, data.user, data.age, data.nickname, data.insta, data.email, data.presentation);
+    return new Author(data.id, data.user, data.age, data.nickname, data.insta, data.email, data.presentation, data.profile_photo);
 }
 
 export async function updateAuthor(id, authorData) {
@@ -330,7 +333,7 @@ export async function updateAuthor(id, authorData) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Errore nell\'aggiornamento del profilo autore');
-    return new Author(data.id, data.user, data.age, data.nickname, data.insta, data.email, data.presentation);
+    return new Author(data.id, data.user, data.age, data.nickname, data.insta, data.email, data.presentation, data.profile_photo);
 }
 
 export async function deleteAuthor(id) {
@@ -365,6 +368,60 @@ export async function getArticlesByAuthorId(authorId) {
         )
     );
 }
+
+
+// EVENTS
+
+export async function getEvents() {
+    const response = await fetch(`${SERVER_URL}/api/events`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Errore nel caricamento degli eventi');
+    }
+    const events = await response.json();
+    return events.map(e => new Event(
+        e.id,
+        e.title,
+        e.category,
+        e.date,
+        e.location,
+        e.address,
+        e.extract,
+        e.description,
+        e.capacity,
+        e.status,
+        e.photo
+    ));
+}
+
+export async function getEventById(id) {
+    const response = await fetch(`${SERVER_URL}/api/events/${id}`, {
+        method: 'GET',
+        credentials: 'include'
+    });
+    if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Errore nel caricamento dell\'evento');
+    }
+    const e = await response.json();
+    return new Event(
+        e.id,
+        e.title,
+        e.category,
+        e.date,
+        e.location,
+        e.address,
+        e.extract,
+        e.description,
+        e.capacity,
+        e.status,
+        e.photo
+    );
+}
+
 
 
 

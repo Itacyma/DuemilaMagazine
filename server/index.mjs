@@ -6,11 +6,43 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import DAO from './dao.mjs';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = new express();
 const port = 3001;
+
+// Configurazione multer per upload immagini profilo
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'public', 'profile_images'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'profile_' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const fileFilter = (req, file, cb) => {
+  // Accetta solo immagini
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Solo file immagine sono permessi'), false);
+  }
+};
+
+const upload = multer({ 
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
+});
 
 
 app.use(express.json());
@@ -24,6 +56,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/public', express.static('public'));
+app.use('/profile_images', express.static(path.join(__dirname, 'public', 'profile_images')));
 
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
@@ -90,9 +123,11 @@ app.delete('/api/login/current', (req, res) => {
 });
 
 // REGISTRAZIONE
-app.post('/api/register', async (req, res) => {
-  const { username, name, password, type } = req.body;
+app.post('/api/register', upload.single('profilePhoto'), async (req, res) => {
+  const { username, name, password, type, age, nickname, presentation } = req.body;
   console.log(req.body);
+  console.log('File:', req.file);
+  
   if (!username || !name || !password) {
     return res.status(400).json({ error: 'Tutti i campi sono obbligatori.' });
   }
@@ -100,14 +135,43 @@ app.post('/api/register', async (req, res) => {
     return res.status(400).json({ error: 'La password deve essere di almeno 6 caratteri.' });
   }
 
+  // Se type è 'writer', nickname e presentation sono obbligatori
+  if (type === 'writer' && (!nickname || !presentation)) {
+    return res.status(400).json({ error: 'Nickname e presentazione sono obbligatori per gli scrittori.' });
+  }
+
   try {
     const existingUser = await DAO.getUserByUsername(username);
     if (existingUser) {
       return res.status(409).json({ error: 'Username già in uso.' });
     }
+
+    // Se è writer, verifica che il nickname non sia già in uso
+    if (type === 'writer') {
+      const existingNickname = await DAO.getAuthorByNickname(nickname);
+      if (existingNickname) {
+        return res.status(409).json({ error: 'Nickname già in uso.' });
+      }
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-    await DAO.createUser({ username, name, password: hash, salt, type });
+    const userId = await DAO.createUser({ username, name, password: hash, salt, type });
+
+    // Se è writer, crea anche l'entry in Authors
+    if (type === 'writer') {
+      const profilePhotoPath = req.file ? `/profile_images/${req.file.filename}` : null;
+      await DAO.createAuthor({
+        user: userId,
+        age: Number(age),
+        nickname,
+        presentation,
+        profile_photo: profilePhotoPath,
+        insta: null,
+        email: null
+      });
+    }
+
     return res.status(201).json({ success: true });
   } catch (err) {
     console.error(err);
@@ -177,7 +241,6 @@ app.post('/api/articles/own/new', isLoggedIn, async (req, res) => {
     });
 
     // Crea una entry nella tabella Likes per l'autore
-    await DAO.createLikeEntry(newArticle.id, userId);
 
     res.status(201).json(newArticle);
   } catch (err) {
@@ -356,6 +419,35 @@ app.get('/api/frequents', isLoggedIn, async (req, res) => {
   }
 });
 
+// EVENTS
+
+app.get('/api/events', async (req, res) => {
+  try {
+    const events = await DAO.getAllEvents();
+    res.json(events);
+  } catch (err) {
+    console.error('Get events error:', err);
+    res.status(500).json({ error: 'Errore nel recupero degli eventi.' });
+  }
+});
+
+app.get('/api/events/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) {
+      return res.status(400).json({ error: 'Id evento non valido' });
+    }
+    const event = await DAO.getEventById(id);
+    if (!event) {
+      return res.status(404).json({ error: 'Evento non trovato' });
+    }
+    res.json(event);
+  } catch (err) {
+    console.error('Get event by id error:', err);
+    res.status(500).json({ error: 'Errore nel recupero dell\'evento.' });
+  }
+});
+
 app.get('/api/favourites/:articleId/check', isLoggedIn, async (req, res) => {
   try {
     const userId = req.user.id;
@@ -379,15 +471,14 @@ app.get('/api/authors', async (req, res) => {
   }
 });
 
-app.get('/api/authors/:id', async (req, res) => {
+app.get('/api/authors/me', isLoggedIn, async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    if (!Number.isInteger(id)) return res.status(400).json({ error: 'Id autore non valido' });
-    const author = await DAO.getAuthorById(id);
-    if (!author) return res.status(404).json({ error: 'Autore non trovato' });
+    const userId = req.user.id;
+    const author = await DAO.getAuthorByUserId(userId);
+    if (!author) return res.status(404).json({ error: 'Non sei registrato come autore' });
     res.json(author);
   } catch (err) {
-    res.status(500).json({ error: 'Errore nel recupero dell\'autore.' });
+    res.status(500).json({ error: 'Errore nel recupero del profilo autore.' });
   }
 });
 
@@ -403,14 +494,15 @@ app.get('/api/authors/user/:userId', async (req, res) => {
   }
 });
 
-app.get('/api/authors/me', isLoggedIn, async (req, res) => {
+app.get('/api/authors/:id', async (req, res) => {
   try {
-    const userId = req.user.id;
-    const author = await DAO.getAuthorByUserId(userId);
-    if (!author) return res.status(404).json({ error: 'Non sei registrato come autore' });
+    const id = Number(req.params.id);
+    if (!Number.isInteger(id)) return res.status(400).json({ error: 'Id autore non valido' });
+    const author = await DAO.getAuthorById(id);
+    if (!author) return res.status(404).json({ error: 'Autore non trovato' });
     res.json(author);
   } catch (err) {
-    res.status(500).json({ error: 'Errore nel recupero del profilo autore.' });
+    res.status(500).json({ error: 'Errore nel recupero dell\'autore.' });
   }
 });
 

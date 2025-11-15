@@ -18,9 +18,13 @@ import { ArticlePage } from './pages/ArticlePage';
 import { RegisterPage } from './components/Register.jsx';
 import { MyArticlesPage } from './pages/MyArticles.jsx';
 import { FavouritesPage } from "./pages/Favourite.jsx";
-import {ScrollToTop} from "./components/ScrollToTop.jsx";
+import { ScrollToTop } from "./components/ScrollToTop.jsx";
 import { AuthorsPage } from "./pages/AuthorsPage.jsx";
 import { AuthorPage } from "./pages/AuthorPage.jsx";
+import { EventsPage } from "./pages/EventsPage.jsx";
+import { ProfilePage } from "./pages/ProfilePage.jsx";
+import { AboutUsPage } from "./pages/AboutUsPage.jsx";
+import { ContactsPage } from "./pages/ContactsPage.jsx";
 
 
 function App() {
@@ -99,6 +103,11 @@ function App() {
               setSelectedArticle={setSelectedArticle}
               setSelectedAuthorNickname={setSelectedAuthorNickname}
               />} />
+            <Route path="/profile" element={<ProfilePage 
+              user={user}
+              setSelectedArticle={setSelectedArticle}
+              setSelectedAuthorNickname={setSelectedAuthorNickname}
+              />}/>
             <Route path="/myarticles" element={<MyArticlesPage 
               user={user}
               setSelectedArticle={setSelectedArticle}
@@ -109,6 +118,9 @@ function App() {
               setSelectedArticle={setSelectedArticle}
               setSelectedAuthorNickname={setSelectedAuthorNickname}
             />}/>
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/aboutus" element={<AboutUsPage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

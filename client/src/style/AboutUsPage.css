@@ -1,0 +1,331 @@
+.aboutus-stats-row-wrapper {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.aboutus-stats-title-main {
+	color: #662e9b;
+	font-size: 2rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 2rem;
+}
+.aboutus-stats-section {
+	margin-bottom: 5rem;
+}
+.aboutus-stats-row {
+	row-gap: 2rem;
+}
+.aboutus-stats-card {
+	width: 100%;
+	max-width: 340px;
+	border: 2px solid #662e9b;
+	border-radius: 1rem;
+	box-shadow: 0 4px 16px rgba(102, 46, 155, 0.10);
+	background: #662e9b;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.aboutus-stats-icon {
+	margin-top: 1.5rem;
+	margin-bottom: 0.8rem;
+	text-align: center;
+}
+.aboutus-stats-icon i {
+	font-size: 3.2rem;
+	color: #fff;
+}
+.aboutus-stats-title {
+	color: #fff;
+	font-size: 1.15rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+.aboutus-stats-value {
+	font-size: 2.2rem;
+	color: #FF5623;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+.aboutus-focus-row {
+	margin-top: 2.5rem;
+	margin-bottom: 2.5rem;
+	row-gap: 2.5rem;
+}
+
+.aboutus-focus-card {
+	width: 100%;
+	max-width: 340px;
+	border: 2px solid #662e9b;
+	border-radius: 1rem;
+	box-shadow: 0 4px 16px rgba(102, 46, 155, 0.10);
+	background: #fff !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+.aboutus-focus-card:hover {
+	transform: translateY(-6px) scale(1.03);
+	box-shadow: 0 8px 24px rgba(102, 46, 155, 0.18);
+	border-color: #FF5623;
+}
+
+.aboutus-focus-icon {
+	margin-top: 1.5rem;
+	margin-bottom: 0.8rem;
+	text-align: center;
+}
+.aboutus-focus-icon i {
+	font-size: 3.2rem;
+	color: #662e9b;
+	transition: color 0.2s;
+}
+.aboutus-focus-card:hover .aboutus-focus-icon i {
+	color: #FF5623;
+}
+
+.aboutus-focus-title {
+	color: #662e9b;
+	font-size: 1.25rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0.5rem;
+	transition: color 0.2s;
+}
+.aboutus-focus-text {
+	font-size: 1.05rem;
+	color: #444;
+	text-align: center;
+}
+
+.aboutus-focus-card:hover .aboutus-focus-title {
+	color: #FF5623;
+}
+
+@media (max-width: 768px) {
+	.aboutus-focus-card {
+		max-width: 100%;
+	}
+	.aboutus-focus-icon i {
+		font-size: 2.2rem;
+	}
+	.aboutus-focus-title {
+		font-size: 1.05rem;
+	}
+	.aboutus-focus-text {
+		font-size: 0.95rem;
+	}
+}
+
+.aboutus-page {
+	width: 100vw;
+	min-width: 100vw;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+
+.aboutus-title {
+	color: #662e9b;
+	font-size: 2.8rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 1.2rem;
+}
+
+.aboutus-description {
+	font-size: 1.2rem;
+	color: #444;
+	text-align: center;
+	margin-bottom: 2.5rem;
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.aboutus-divider {
+	border: none;
+	border-top: 3px solid #662e9b;
+	width: 40%;
+	margin: 2.5rem auto 5rem;
+}
+
+.aboutus-section-title {
+	color: #662e9b;
+	font-size: 2rem;
+	font-weight: 600;
+    margin-top: 6rem;
+	text-align: center;
+}
+
+.aboutus-authors-row {
+	margin-bottom: 2.5rem;
+}
+
+.aboutus-author-card {
+	width: 100%;
+	max-width: 340px;
+	border: 2px solid #662e9b;
+	border-radius: 1rem;
+	box-shadow: 0 4px 16px rgba(102, 46, 155, 0.08);
+	background: rgba(102, 46, 155, 0.07);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.aboutus-author-photo {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #662e9b;
+	margin-top: 1.2rem;
+	margin-bottom: 0.8rem;
+	box-shadow: 0 2px 8px rgba(102, 46, 155, 0.15);
+}
+
+.aboutus-author-nickname {
+	color: #662e9b;
+	font-size: 1.3rem;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0.5rem;
+}
+
+.aboutus-author-presentation {
+	font-size: 1rem;
+	color: #444;
+	text-align: center;
+	margin-bottom: 0.7rem;
+}
+
+.aboutus-author-insta {
+	display: inline-block;
+	color: #E4405F;
+	font-weight: 500;
+	text-decoration: none;
+	margin-right: 0.7rem;
+	font-size: 1.05rem;
+}
+.aboutus-author-insta i {
+	margin-right: 0.3rem;
+}
+.aboutus-author-insta:hover {
+	color: #fff;
+	background: #E4405F;
+	border-radius: 8px;
+	padding: 0.2rem 0.5rem;
+}
+
+.aboutus-author-email {
+	color: #007bff;
+	font-size: 1.05rem;
+	margin-top: 0.2rem;
+	text-align: center;
+}
+.aboutus-author-email i {
+	margin-right: 0.3rem;
+}
+
+.aboutus-keypoints {
+	list-style: none;
+	padding: 0;
+	max-width: 700px;
+	margin: 2rem auto 0 auto;
+}
+.aboutus-keypoints li {
+	background: rgba(102, 46, 155, 0.07);
+	border-left: 4px solid #662e9b;
+	margin-bottom: 1rem;
+	padding: 1rem 1.2rem;
+	font-size: 1.08rem;
+	color: #333;
+	border-radius: 0 8px 8px 0;
+	box-shadow: 0 2px 8px rgba(102, 46, 155, 0.07);
+}
+
+.aboutus-stats-title-main {
+    color: #662e9b;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Contenitore di ogni singola statistica (Titolo + Numero) */
+.aboutus-inline-stat {
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+.aboutus-inline-stat-title {
+    color: #662e9b; /* Colore tema Sapienza */
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.aboutus-inline-stat-value {
+    /* Il numero animato */
+    font-size: 3.5rem;
+    color: #FF5623; /* Colore di risalto */
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* Divisore sotto la stat - stile personalizzato */
+.aboutus-stat-divider {
+    border: none;
+    border-top: 3px solid #f0f0f0; /* Divisore sottile e discreto */
+    width: 80%;
+    margin: 0.5rem auto 0.5rem auto; /* Spazio ridotto */
+}
+
+/* Media Query per layout mobile: le statistiche tornano verticali */
+@media (min-width: 768px) {
+    /* Il divisore verticale è solo tra le colonne su desktop */
+    .aboutus-stats-inline-row > div:not(:last-child) {
+        border-right: 2px solid #f0f0f0;
+    }
+    /* Rimuovi il divisore orizzontale su desktop (il bordo destro lo sostituisce) */
+    .aboutus-stat-divider {
+        display: none;
+    }
+}
+@media (max-width: 767.98px) {
+    /* Aggiungi margine al divisore orizzontale su mobile */
+    .aboutus-stat-divider {
+        display: block;
+        border-top: 2px solid #f0f0f0;
+        width: 60%;
+    }
+    .aboutus-stats-inline-row > div {
+        border-right: none;
+    }
+}
+
+@media (max-width: 768px) {
+	.aboutus-title {
+		font-size: 2rem;
+	}
+	.aboutus-section-title {
+		font-size: 1.3rem;
+	}
+	.aboutus-author-card {
+		max-width: 100%;
+	}
+	.aboutus-author-photo {
+		width: 90px;
+		height: 90px;
+	}
+	.aboutus-keypoints li {
+		font-size: 0.98rem;
+		padding: 0.7rem 0.7rem;
+	}
+}
